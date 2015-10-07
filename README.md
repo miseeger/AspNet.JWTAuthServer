@@ -35,7 +35,7 @@ gitHub repositories:
 
 # Putting it together
 
-#### Before we start the little journey: It is highly recommended to read the articles by Taiseer Joudeh to understand all the techniques, put together in this project!  
+**Before we start the little journey: It is highly recommended to read the articles by Taiseer Joudeh to understand all the techniques, put together in this project!**  
 
 ## The ASP.NET Identity Storage Provider for NPoco
 
@@ -81,7 +81,7 @@ or [clone the repository](github-windows://openRepo/https://github.com/miseeger/
 Then open it in Visual Studio and restore the NuGet packages. The solution was developed 
 with the VS2015 Community Edition. When done, then rebuild the solution.
 
-Copy the SQLite database located in the `Data` (solution) folder to a local directory in 
+Copy the SQLite database located in the **Data** (solution) folder to a local directory in 
 your system and set the connection string in the app.config file of the AspNet.JWTAuthServer 
 project, accordingly:
 
@@ -91,7 +91,7 @@ project, accordingly:
     </connectionStrings>
 ```
 
-Make the projects `AspNet.JWTAuthServer` and `MicroErpApi` the startup projects and start 
+Make the projects **AspNet.JWTAuthServer** and **MicroErpApi** the startup projects and start 
 the solution. Two console windows will pop up. One of them is the self-hosted JWTServer 
 WebAPI and the other one is the resource API for the demo MicroERP.
 
@@ -100,7 +100,7 @@ of the solution. The prequisite for this is an IIS Express Server to be installe
 client comes with an `iisExpress.config` file and a batch file (`runapp.cmd`) to get it 
 startet. You just have to set the correct path to the code:
 
-* iisExpress.config:
+#### iisExpress.config:
 ```xml
     <!-- Please keep the port. It's needed for security chekcs on allowed origins for API calls. -->
     <site name="MicroERP" id="1">
@@ -113,7 +113,7 @@ startet. You just have to set the correct path to the code:
     </site>  
 ```
 
-* runapp.cmd:
+##### runapp.cmd:
 ```
     "C:\Program Files (x86)\IIS Express\iisexpress" /config:d:\the\path\to\MicroErp.Web\iisexpress.config /site:MicroERP
 ```
@@ -124,9 +124,9 @@ install [SMTP4DEV](http://smtp4dev.codeplex.com/)
 a brilliant tool which intercepts outgoing emails so that you're able to check them. Using SMTP4DEV, a 
 functinal SMTV sever is not needed. For this, the SMTP service is configured right out of the box. 
 
-When all settings and installations are done, start the runapp.cmd and navigate to ``` http://localhost:9995 ``` ...
+When all settings and installations are done, start the runapp.cmd and navigate to **http://localhost:9995** ...
 
-The Login password for the demo(!) user "Admin" is ```!Admin~P@ss!``` 
+The Login password for the demo(!) user "Admin" is _!Admin~P@ss!_ 
 
 ## app.config files
 
@@ -135,38 +135,38 @@ be configured. Here are the provided keys and their short description:
 
 ### AspNet.JWTAuthServer
 
-Property | Description | Example
------------- | -------------
-**JWTServer.Url** | Url with a placeholder for the port | `http://localhost:{0}` 
-**JWTServer.AlternativeUrl** | Alternative Url notation, also with placeholder | `http://127.0.0.1:{0}`  
-**JWTServer.MultiUrl** | Customizable Url | `http://{0}:{1}`
-**JWTServer.Port** | Port number for the hosted API | `9999`
-**JWTServer.AllowedOrigins** | Allowed Origins for the CORS middleware (separated by comma) | `http://localhost:9995`   
-**WTServer.JWTIssuer** | Url of the JWT issuer | `http://localhost:9999` 
-**JWTServer.TokenEndpointPath** | Path to the token generating API endpoint | `/oauth/token`  
-**JWTServer.ConfirmationEmailTokenLifespan** | Lifespan of an email sent for confirming a new registration (hours) | `6` 
-**JWTServer.InitialUserRole** | Initial role of a newly registered user | `User` 
-**JWTServer.ApiClientId** | Id of the accessing (here: management) client | `...`  
-**JWTServer.ApiClientSecret** | Secret key to encrypt the token | `...` 
-**EmailService.SenderAddress** | Address that sends the auth server emails | `sender@myweb.net`
-**EmailService.SenderName** | Email sender's name | `Identity JWTServer`
-**EmailService.Account** | Account to authenticate at the SMTP server | `mymail.account`
-**EmailService.Password** | Password for SMTP server authentication | `mySMTPPass`
-**EmailService.MailServerAddress** | IP address of the SMTP server  | `127.0.0.1`
-**EmailService.MailServerPort** | SMTP Port | `25`
+| Property                                     | Description                                                         | Example                 |
+| :------------------------------------------- | :------------------------------------------------------------------ | :---------------------- |
+| **JWTServer.Url**                            | Url with a placeholder for the port                                 | `http://localhost:{0}`  |  
+| **JWTServer.AlternativeUrl**                 | Alternative Url notation, also with placeholder                     | `http://127.0.0.1:{0}`  |
+| **JWTServer.MultiUrl**                       | Customizable Url                                                    | `http://{0}:{1}`        |
+| **JWTServer.Port**                           | Port number for the hosted API                                      | `9999`                  |
+| **JWTServer.AllowedOrigins**                 | Allowed Origins for the CORS middleware (separated by comma)        | `http://localhost:9995` |   
+| **WTServer.JWTIssuer**                       | Url of the JWT issuer                                               | `http://localhost:9999` | 
+| **JWTServer.TokenEndpointPath**              | Path to the token generating API endpoint                           | `/oauth/token`          |  
+| **JWTServer.ConfirmationEmailTokenLifespan** | Lifespan of an email sent for confirming a new registration (hours) | `6`                     | 
+| **JWTServer.InitialUserRole**                | Initial role of a newly registered user                             | `User`                  | 
+| **JWTServer.ApiClientId**                    | Id of the accessing (here: management) client                       | `...`                   |
+| **JWTServer.ApiClientSecret**                | Secret key to encrypt the token                                     | `...`                   |
+| **EmailService.SenderAddress**               | Address that sends the auth server emails                           | `sender@myweb.net`      |
+| **EmailService.SenderName**                  | Email sender's name                                                 | `Identity JWTServer`    |
+| **EmailService.Account**                     | Account to authenticate at the SMTP server                          | `mymail.account`        |
+| **EmailService.Password**                    | Password for SMTP server authentication                             | `mySMTPPass`            |
+| **EmailService.MailServerAddress**           | IP address of the SMTP server                                       | `127.0.0.1`             |
+| **EmailService.MailServerPort**              | SMTP Port                                                           | `25`                    |
 
 ### MicroErpApi
 
-Property | Description | Example
------------- | -------------
-**MicroErpApi.Url** | Url with a placeholder for the port | `http://localhost:{0}` 
-**MicroErpApi.AlternativeUrl** | Alternative Url notation, also with placeholder | `http://127.0.0.1:{0}`  
-**MicroErpApi.MultiUrl** | Customizable Url | `http://{0}:{1}`
-**MicroErpApi.Port** | Port number for the hosted API | `9990`
-**MicroErpApi.AllowedOrigins** | Allowed Origins for the CORS middleware (separated by comma) | `http://localhost:9995`   
-**MicroErpApi.JWTIssuer** | Url of the JWT issuer | `http://localhost:9999` 
-**MicroErpApi.AudienceClientId** | Id of the accessing client (audience) | `...`  
-**MicroErpApi.AudienceClientSecret** | Secret key to encrypt the token | `...` 
+| Property                             | Description                                                  | Example                 |
+| :----------------------------------- | :----------------------------------------------------------- | :---------------------- |
+| ­**MicroErpApi.Url**                  | Url with a placeholder for the port                          | `http://localhost:{0}`  | 
+| **MicroErpApi.AlternativeUrl**       | Alternative Url notation, also with placeholder              | `http://127.0.0.1:{0}`  |   
+| **MicroErpApi.MultiUrl**             | Customizable Url                                             | `http://{0}:{1}`        |
+| **MicroErpApi.Port**                 | Port number for the hosted API                               | `9990`                  |
+| **MicroErpApi.AllowedOrigins**       | Allowed Origins for the CORS middleware (separated by comma) | `http://localhost:9995` |
+| **MicroErpApi.JWTIssuer**            | Url of the JWT issuer                                        | `http://localhost:9999` | 
+| **MicroErpApi.AudienceClientId**     | Id of the accessing client (audience)                        | `...`                   |
+| **MicroErpApi.AudienceClientSecret** | Secret key to encrypt the token                              | `...`                   |
 
 **All keys and IDs must be obtained from the according database entry of the client. They're 
 automatically generated on creation by the extended ASP.NET Identity Provider.**
