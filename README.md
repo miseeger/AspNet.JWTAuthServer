@@ -5,9 +5,9 @@ The intention for this project was **LEARNING** ... and the need of a lightweigh
 [OAuth 2.0 Resource Owner Password Credential Flow](http://oauthlib.readthedocs.org/en/latest/oauth2/grants/password.html) 
 which can then be used for user authentication in a SPA that consumes a secured WebAPI. It 
 should use ASP.NET Identity, be a self-hosted OWIN WebApi - not depending on IIS - and have 
-the capability to be easily turned into a Windows Service with a small programming effort. 
-Also the underlying database should be easily interchangable and not "nailed" to an MS SQL 
-Server.
+the capability to be easily turned into a Windows Service by setting a conditional compilation 
+symbol named `COMPILE_AS_A_SERVICE`. Also the underlying database should be easily interchangable 
+and not "nailed" to an MS SQL Server.
 
 ## The code used in this solution 
 
@@ -79,7 +79,8 @@ endpoints.
 First off grab the sourcecode as a [zip file](https://github.com/miseeger/AspNet.JWTAuthServer/archive/master.zip)
 or [clone the repository](github-windows://openRepo/https://github.com/miseeger/AspNet.JWTAuthServer). 
 Then open it in Visual Studio and restore the NuGet packages. The solution was developed 
-with the VS2015 Community Edition. When done, then rebuild the solution.
+with the VS2015 Community Edition. When done, then rebuild the solution. Right out of the 
+box the APIs will be compiled as console applications. 
 
 Copy the SQLite database located in the **Data** (solution) folder to a local directory in 
 your system and set the connection string in the app.config file of the AspNet.JWTAuthServer 
@@ -135,41 +136,59 @@ be configured. Here are the provided keys and their short description:
 
 ### AspNet.JWTAuthServer
 
-| Property                                     | Description                                                         | Example                 |
-| :------------------------------------------- | :------------------------------------------------------------------ | :---------------------- |
-| **JWTServer.Url**                            | Url with a placeholder for the port                                 | `http://localhost:{0}`  |  
-| **JWTServer.AlternativeUrl**                 | Alternative Url notation, also with placeholder                     | `http://127.0.0.1:{0}`  |
-| **JWTServer.MultiUrl**                       | Customizable Url                                                    | `http://{0}:{1}`        |
-| **JWTServer.Port**                           | Port number for the hosted API                                      | `9999`                  |
-| **JWTServer.AllowedOrigins**                 | Allowed Origins for the CORS middleware (separated by comma)        | `http://localhost:9995` |   
-| **WTServer.JWTIssuer**                       | Url of the JWT issuer                                               | `http://localhost:9999` | 
-| **JWTServer.TokenEndpointPath**              | Path to the token generating API endpoint                           | `/oauth/token`          |  
-| **JWTServer.ConfirmationEmailTokenLifespan** | Lifespan of an email sent for confirming a new registration (hours) | `6`                     | 
-| **JWTServer.InitialUserRole**                | Initial role of a newly registered user                             | `User`                  | 
-| **JWTServer.ApiClientId**                    | Id of the accessing (here: management) client                       | `...`                   |
-| **JWTServer.ApiClientSecret**                | Secret key to encrypt the token                                     | `...`                   |
-| **EmailService.SenderAddress**               | Address that sends the auth server emails                           | `sender@myweb.net`      |
-| **EmailService.SenderName**                  | Email sender's name                                                 | `Identity JWTServer`    |
-| **EmailService.Account**                     | Account to authenticate at the SMTP server                          | `mymail.account`        |
-| **EmailService.Password**                    | Password for SMTP server authentication                             | `mySMTPPass`            |
-| **EmailService.MailServerAddress**           | IP address of the SMTP server                                       | `127.0.0.1`             |
-| **EmailService.MailServerPort**              | SMTP Port                                                           | `25`                    |
+| Property                                     | Description                                                         | Example                      |
+| :------------------------------------------- | :------------------------------------------------------------------ | :--------------------------- |
+| **JWTServer.ServiceName**                    | Name of the Service displayed in the windows services console       | `JWT Authentication Server`  |  
+| **JWTServer.ServiceDescription**             | Short description of the Service                                    | `... description text...`    |  
+| **JWTServer.Url**                            | Url with a placeholder for the port                                 | `http://localhost:{0}`       |  
+| **JWTServer.AlternativeUrl**                 | Alternative Url notation, also with placeholder                     | `http://127.0.0.1:{0}`       |
+| **JWTServer.MultiUrl**                       | Customizable Url                                                    | `http://{0}:{1}`             |
+| **JWTServer.Port**                           | Port number for the hosted API                                      | `9999`                       |
+| **JWTServer.AllowedOrigins**                 | Allowed Origins for the CORS middleware (separated by comma)        | `http://localhost:9995`      |   
+| **WTServer.JWTIssuer**                       | Url of the JWT issuer                                               | `http://localhost:9999`      | 
+| **JWTServer.TokenEndpointPath**              | Path to the token generating API endpoint                           | `/oauth/token`               |  
+| **JWTServer.ConfirmationEmailTokenLifespan** | Lifespan of an email sent for confirming a new registration (hours) | `6`                          | 
+| **JWTServer.InitialUserRole**                | Initial role of a newly registered user                             | `User`                       | 
+| **JWTServer.ApiClientId**                    | Id of the accessing (here: management) client                       | `...`                        |
+| **JWTServer.ApiClientSecret**                | Secret key to encrypt the token                                     | `...`                        |
+| **EmailService.SenderAddress**               | Address that sends the auth server emails                           | `sender@myweb.net`           |
+| **EmailService.SenderName**                  | Email sender's name                                                 | `Identity JWTServer`         |
+| **EmailService.Account**                     | Account to authenticate at the SMTP server                          | `mymail.account`             |
+| **EmailService.Password**                    | Password for SMTP server authentication                             | `mySMTPPass`                 |
+| **EmailService.MailServerAddress**           | IP address of the SMTP server                                       | `127.0.0.1`                  |
+| **EmailService.MailServerPort**              | SMTP Port                                                           | `25`                         |
 
 ### MicroErpApi
 
-| Property                             | Description                                                  | Example                 |
-| :----------------------------------- | :----------------------------------------------------------- | :---------------------- |
-| ­**MicroErpApi.Url**                  | Url with a placeholder for the port                          | `http://localhost:{0}`  | 
-| **MicroErpApi.AlternativeUrl**       | Alternative Url notation, also with placeholder              | `http://127.0.0.1:{0}`  |   
-| **MicroErpApi.MultiUrl**             | Customizable Url                                             | `http://{0}:{1}`        |
-| **MicroErpApi.Port**                 | Port number for the hosted API                               | `9990`                  |
-| **MicroErpApi.AllowedOrigins**       | Allowed Origins for the CORS middleware (separated by comma) | `http://localhost:9995` |
-| **MicroErpApi.JWTIssuer**            | Url of the JWT issuer                                        | `http://localhost:9999` | 
-| **MicroErpApi.AudienceClientId**     | Id of the accessing client (audience)                        | `...`                   |
-| **MicroErpApi.AudienceClientSecret** | Secret key to encrypt the token                              | `...`                   |
+| Property                             | Description                                                   | Example                   |
+| :----------------------------------- | :------------------------------------------------------------ | :------------------------ |
+| **MicroErpApi.ServiceName**          | Name of the Service displayed in the windows services console | `Micro ERP API`           |  
+| **MicroErpApi.ServiceDescription**   | Short description of the Service                              | `... description text...` |  
+| ­**MicroErpApi.Url**                  | Url with a placeholder for the port                           | `http://localhost:{0}`    | 
+| **MicroErpApi.AlternativeUrl**       | Alternative Url notation, also with placeholder               | `http://127.0.0.1:{0}`    |   
+| **MicroErpApi.MultiUrl**             | Customizable Url                                              | `http://{0}:{1}`          |
+| **MicroErpApi.Port**                 | Port number for the hosted API                                | `9990`                    |
+| **MicroErpApi.AllowedOrigins**       | Allowed Origins for the CORS middleware (separated by comma)  | `http://localhost:9995`   |
+| **MicroErpApi.JWTIssuer**            | Url of the JWT issuer                                         | `http://localhost:9999`   | 
+| **MicroErpApi.AudienceClientId**     | Id of the accessing client (audience)                         | `...`                     |
+| **MicroErpApi.AudienceClientSecret** | Secret key to encrypt the token                               | `...`                     |
 
 **All keys and IDs must be obtained from the according database entry of the client. They're 
 automatically generated on creation by the extended ASP.NET Identity Provider.**
+
+## ASP.NET Web APIs as a Windows Service
+
+It is also possible to compile the Web APIs to get a self-installable Windows Service. The only thing
+you have to set is the conditional compilation symbol named `COMPILE_AS_A_SERVICE`. Currently it's a
+kind of "deactivated" by two preceding slashes. Just remove them.
+
+When the compilation is done, call each API executables from the commandline with the parameter
+`--install`. A dialog is prompted for the credentials of a user that runs the service on the local
+machine. It is very important to authenticate a user that has the rights to access each resource
+(database, file directory or a remote share on a network) which is used by the Web API logic.
+
+To uninsall the Web API Service, call each API executable from the commandline with the paramtert
+`--uninstall`.  
 
 ## Client/SPA configuration
 
